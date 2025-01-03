@@ -9,14 +9,7 @@ import (
 func Discord(c *gin.Context) {
 	c.HTML(http.StatusOK, "discord_bot.html", gin.H{
 		"title": "Discord Bot",
-		"tabs": []struct {
-			Name string
-			Link string
-		}{
-			{"Home", "/"},
-			{"Projects", "/projects"},
-			{"TTRPG", "#"},
-		},
+		"tabs": NavBarLinks,
 		"commands": []struct {
 			Name string
 			Command string
