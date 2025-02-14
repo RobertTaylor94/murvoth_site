@@ -1,28 +1,23 @@
-FROM golang:1.22.1-alpine AS builder
-
-# RUN apk add --no-cache build-base
-# RUN apk add --no-cache gcc g++ musl-dev
+FROM node:18-alpine AS build
 
 WORKDIR /app
 
+COPY package*.json ./
+
+RUN npm install
+
 COPY . .
 
-RUN go build -o murv main.go
+RUN npm run build
 
-FROM alpine:latest
+FROM nginx:alpine
 
-RUN addgroup -S murvgroup && adduser -S murvuser -G murvgroup
+COPY --from=build /app/dist /usr/share/nginx/html
 
-WORKDIR /
+RUN chmod -R 755 /usr/share/nginx/html
 
-COPY --from=builder /app/murv /murv
-
-COPY --from=builder /app/templates /templates
-
-RUN chown murvuser:murvgroup /murv
-
-USER murvuser
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 5050
 
-CMD ["/murv"]
+CMD ["nginx", "-g", "daemon off;"]
