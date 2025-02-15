@@ -1,4 +1,4 @@
-import { Card, Col, Row } from "react-bootstrap"
+import { Card, Col, Row, Container } from "react-bootstrap"
 import { Link } from "react-router";
 
 interface ProjectCardProps {
@@ -16,8 +16,13 @@ function ProjectCard({ title, imgSrc, desc, link }: ProjectCardProps) {
           <Col md={6} className="d-flex flex-column">
             <Card.Title className="mx-auto p-2"><Link to={link}>{title}</Link></Card.Title>
             <Card.Img
-              className="p-2 rounded border m-2 h-100"
+              className="p-2 rounded border m-2 img-fluid"
               src={imgSrc}
+              style={{
+                maxHeight: '40vh',
+                objectFit: 'cover',
+                width: '100%'
+              }}
             ></Card.Img>
           </Col>
 
