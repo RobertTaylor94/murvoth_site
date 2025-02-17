@@ -1,11 +1,19 @@
 import { Container, Col, Row, Card } from "react-bootstrap";
 import Navbar from "../NavBar";
+import LegendBotImage from "./LegendBotImage";
 
 function LegendBot() {
 
   const commands = [
     { title: "Expression Roll", command: "/q" },
     { title: "Add Custom Roll", command: "/cr add" },
+  ]
+
+  const images = [
+    { src: "image1.png", desc: "expression roll `/q 1d20`" },
+    { src: "image2.png", desc: "viewing a users saved rolls `/cr check`" },
+    { src: "image3.png", desc: "rolling a saved roll `/cr roll bow`" },
+    { src: "image4.png", desc: "update the dice colour `/conf update color:purple`" }
   ]
 
   return (
@@ -29,6 +37,11 @@ function LegendBot() {
           <Row className="mt-3">
           <Card className="p-3">
             <Card.Title>Images</Card.Title>
+            <Col>
+              {images.map((image, index) => (
+                <LegendBotImage src={image.src} desc={image.desc} key={index} />
+              ))}
+            </Col>
           </Card>
           </Row>
         </Col>
